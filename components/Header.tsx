@@ -51,6 +51,9 @@ export default function Header({ user }: HeaderProps) {
             <Link href="/" className="text-gray-400 hover:text-gray-600 transition-colors">
               Home
             </Link>
+            <Link href="/about" className="text-gray-400 hover:text-gray-600 transition-colors">
+              About
+            </Link>
             <Link href="/hosts" className="text-gray-400 hover:text-gray-600 transition-colors">
               Hosts
             </Link>
@@ -122,6 +125,13 @@ export default function Header({ user }: HeaderProps) {
                 onClick={() => setMobileMenuOpen(false)}
               >
                 Home
+              </Link>
+              <Link 
+                href="/about" 
+                className="block px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg transition-colors"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                About
               </Link>
               <Link 
                 href="/hosts" 

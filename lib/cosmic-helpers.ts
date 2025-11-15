@@ -1,6 +1,22 @@
 import { cosmic, hasStatus } from './cosmic'
 import type { Listing, Review, Host, Booking, User } from '@/types'
 
+// Page interface for About and other static pages
+export interface Page {
+  id: string
+  slug: string
+  title: string
+  metadata: {
+    page_title: string
+    hero_image?: {
+      url: string
+      imgix_url: string
+    }
+    content: string
+    seo_description?: string
+  }
+}
+
 // Fetch all listings with host information
 export async function getAllListings(): Promise<Listing[]> {
   try {
@@ -191,5 +207,24 @@ export async function getUserWithHost(userId: string): Promise<User | null> {
       return null
     }
     throw new Error('Failed to fetch user')
+  }
+}
+
+// Changed: Added function to fetch page by slug
+export async function getPageBySlug(slug: string): Promise<Page | null> {
+  try {
+    const response = await cosmic.objects
+      .findOne({
+        type: 'pages',
+        slug
+      })
+      .props(['id', 'title', 'slug', 'metadata'])
+    
+    return response.object as Page
+  } catch (error) {
+    if (hasStatus(error) && error.status === 404) {
+      return null
+    }
+    throw new Error('Failed to fetch page')
   }
 }
