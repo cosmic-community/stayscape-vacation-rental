@@ -10,6 +10,9 @@ const inter = Inter({ subsets: ['latin'] })
 export const metadata: Metadata = {
   title: 'StayScape - Find Your Perfect Vacation Rental',
   description: 'Discover and book unique vacation rentals around the world. From cozy cabins to beachfront villas, find your perfect getaway.',
+  icons: {
+    icon: '/favicon.svg',
+  },
 }
 
 export default function RootLayout({
