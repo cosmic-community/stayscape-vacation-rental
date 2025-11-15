@@ -12,9 +12,9 @@ export async function POST(request: Request) {
         { status: 401 }
       )
     }
-
+    
     const { listingId, checkInDate, checkOutDate, guests, totalNights, totalPrice } = await request.json()
-
+    
     // Validate required fields
     if (!listingId || !checkInDate || !checkOutDate || !guests || !totalNights || !totalPrice) {
       return NextResponse.json(
@@ -22,13 +22,14 @@ export async function POST(request: Request) {
         { status: 400 }
       )
     }
-
-    // Create booking date in YYYY-MM-DD format
+    
+    // Create booking title
+    const bookingTitle = `Booking for ${user.metadata.name}`
     const bookingDate = new Date().toISOString().split('T')[0]
-
-    // Create the booking
+    
+    // Create the booking in Cosmic CMS
     const response = await cosmic.objects.insertOne({
-      title: `Booking for ${user.metadata.name}`,
+      title: bookingTitle,
       type: 'bookings',
       metadata: {
         listing: listingId,
@@ -42,7 +43,7 @@ export async function POST(request: Request) {
         booking_date: bookingDate
       }
     })
-
+    
     return NextResponse.json({
       success: true,
       booking: response.object
@@ -50,7 +51,7 @@ export async function POST(request: Request) {
   } catch (error) {
     console.error('Create booking error:', error)
     return NextResponse.json(
-      { error: 'Failed to create booking' },
+      { error: 'An error occurred while creating the booking' },
       { status: 500 }
     )
   }
