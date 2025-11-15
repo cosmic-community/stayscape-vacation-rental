@@ -29,7 +29,7 @@ export default function ListingCard({ listing }: ListingCardProps) {
     >
       {/* Listing Image */}
       <div className="relative h-64 overflow-hidden">
-        {listing.metadata.photos && listing.metadata.photos.length > 0 ? (
+        {listing.metadata.photos && listing.metadata.photos.length > 0 && listing.metadata.photos[0] ? (
           <img
             src={`${listing.metadata.photos[0].imgix_url}?w=800&h=600&fit=crop&auto=format,compress`}
             alt={listing.metadata.title}
