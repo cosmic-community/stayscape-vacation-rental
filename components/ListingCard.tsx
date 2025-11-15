@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import type { Listing } from '@/types'
+import type { Listing, Host } from '@/types'
 
 interface ListingCardProps {
   listing: Listing
@@ -8,6 +8,11 @@ interface ListingCardProps {
 export default function ListingCard({ listing }: ListingCardProps) {
   const featuredImage = listing.metadata.photos?.[0]
   const host = listing.metadata.host
+  
+  // Type guard: Check if host is a Host object (not a string ID)
+  const isHostObject = (h: Host | string | undefined): h is Host => {
+    return typeof h === 'object' && h !== null && 'metadata' in h
+  }
   
   return (
     <Link href={`/listings/${listing.slug}`}>
@@ -44,7 +49,7 @@ export default function ListingCard({ listing }: ListingCardProps) {
             <span>{listing.metadata.bathrooms} baths</span>
           </div>
           
-          {host && (
+          {host && isHostObject(host) && (
             <div className="flex items-center space-x-3 mb-4 pb-4 border-b border-gray-100">
               {host.metadata.profile_photo && (
                 <img
