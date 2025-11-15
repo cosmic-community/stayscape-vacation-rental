@@ -1,6 +1,9 @@
 import Link from 'next/link'
+import { getSessionUser } from '@/lib/session'
 
-export default function Header() {
+export default async function Header() {
+  const user = await getSessionUser()
+  
   return (
     <header className="sticky top-0 z-50 bg-white border-b border-gray-100 shadow-sm">
       <div className="max-w-7xl mx-auto px-4 py-4">
@@ -28,12 +31,22 @@ export default function Header() {
           </nav>
           
           <div className="flex items-center space-x-4">
-            <button className="text-gray-400 hover:text-gray-600 transition-colors font-medium">
-              Sign In
-            </button>
-            <button className="btn-primary">
-              Sign Up
-            </button>
+            {user ? (
+              <>
+                <Link href="/profile" className="text-gray-400 hover:text-gray-600 transition-colors font-medium">
+                  {user.metadata.name}
+                </Link>
+              </>
+            ) : (
+              <>
+                <Link href="/login" className="text-gray-400 hover:text-gray-600 transition-colors font-medium">
+                  Sign In
+                </Link>
+                <Link href="/signup" className="btn-primary">
+                  Sign Up
+                </Link>
+              </>
+            )}
           </div>
         </div>
       </div>
