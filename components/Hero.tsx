@@ -1,6 +1,6 @@
 export default function Hero() {
   return (
-    <section className="relative bg-gradient-to-r from-primary to-primary-dark text-white py-20 px-4 min-h-[600px] flex items-center">
+    <section className="relative bg-gray-900 text-white py-20 px-4 min-h-[600px] flex items-center">
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
         <img
@@ -8,8 +8,8 @@ export default function Hero() {
           alt="Beautiful vacation home"
           className="w-full h-full object-cover"
         />
-        {/* Overlay for better text readability */}
-        <div className="absolute inset-0 bg-gradient-to-r from-primary/80 to-primary-dark/80"></div>
+        {/* Overlay for better text readability - Changed to black opacity */}
+        <div className="absolute inset-0 bg-black/60"></div>
       </div>
 
       {/* Content */}
