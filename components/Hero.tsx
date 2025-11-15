@@ -1,7 +1,19 @@
 export default function Hero() {
   return (
-    <section className="relative bg-gradient-to-r from-primary to-primary-dark text-white py-20 px-4">
-      <div className="max-w-5xl mx-auto text-center">
+    <section className="relative bg-gradient-to-r from-primary to-primary-dark text-white py-20 px-4 min-h-[600px] flex items-center">
+      {/* Background Image */}
+      <div className="absolute inset-0 z-0">
+        <img
+          src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=2000&h=1200&fit=crop&auto=format,compress"
+          alt="Beautiful vacation home"
+          className="w-full h-full object-cover"
+        />
+        {/* Overlay for better text readability */}
+        <div className="absolute inset-0 bg-gradient-to-r from-primary/80 to-primary-dark/80"></div>
+      </div>
+
+      {/* Content */}
+      <div className="max-w-5xl mx-auto text-center relative z-10">
         <h1 className="text-5xl md:text-6xl font-bold mb-6">
           Find your perfect getaway
         </h1>
