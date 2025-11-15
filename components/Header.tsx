@@ -28,6 +28,9 @@ export default async function Header() {
             <Link href="/reviews" className="text-gray-400 hover:text-gray-600 transition-colors">
               Reviews
             </Link>
+            <Link href="/contact" className="text-gray-400 hover:text-gray-600 transition-colors">
+              Contact
+            </Link>
           </nav>
           
           <div className="flex items-center space-x-4">
