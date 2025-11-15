@@ -1,5 +1,5 @@
 import { cosmic, hasStatus } from './cosmic'
-import type { Listing, Review, Host } from '@/types'
+import type { Listing, Review, Host, Booking } from '@/types'
 
 // Fetch all listings with host information
 export async function getAllListings(): Promise<Listing[]> {
@@ -107,4 +107,30 @@ export async function searchListingsByLocation(location: string): Promise<Listin
   return allListings.filter(listing => 
     listing.metadata.location.toLowerCase().includes(location.toLowerCase())
   )
+}
+
+// Fetch bookings for a specific user
+export async function getBookingsForUser(userId: string): Promise<Booking[]> {
+  try {
+    const response = await cosmic.objects
+      .find({ 
+        type: 'bookings',
+        'metadata.user': userId
+      })
+      .props(['id', 'title', 'slug', 'metadata'])
+      .depth(1)
+    
+    // Sort bookings manually (SDK v1.5+) - newest first
+    const bookings = response.objects as Booking[]
+    return bookings.sort((a, b) => {
+      const dateA = new Date(a.metadata.booking_date || '').getTime()
+      const dateB = new Date(b.metadata.booking_date || '').getTime()
+      return dateB - dateA
+    })
+  } catch (error) {
+    if (hasStatus(error) && error.status === 404) {
+      return []
+    }
+    throw new Error('Failed to fetch bookings')
+  }
 }

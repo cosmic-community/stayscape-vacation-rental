@@ -76,10 +76,29 @@ export interface User extends CosmicObject {
     name: string;
     email: string;
     password_hash: string;
-    profile_photo?: Photo;
-    bio?: string;
-    phone?: string;
+    profile_photo?: Photo | null;
+    bio?: string | null;
+    phone?: string | null;
     created_at?: string;
+  };
+}
+
+// Booking status type - Changed: Make it flexible to handle string values
+export type BookingStatus = string;
+
+// Booking interface
+export interface Booking extends CosmicObject {
+  type: 'bookings';
+  metadata: {
+    listing: Listing;
+    user: string; // User ID reference
+    check_in_date: string;
+    check_out_date: string;
+    guests: number;
+    total_nights: number;
+    total_price: number;
+    status: BookingStatus;
+    booking_date: string;
   };
 }
 
@@ -102,6 +121,11 @@ export function isReview(obj: CosmicObject): obj is Review {
   return obj.type === 'reviews';
 }
 
+export function isBooking(obj: CosmicObject): obj is Booking {
+  return obj.type === 'bookings';
+}
+
 // Utility types
 export type CreateListingData = Omit<Listing, 'id' | 'created_at' | 'modified_at' | 'status'>;
 export type CreateReviewData = Omit<Review, 'id' | 'created_at' | 'modified_at' | 'status'>;
+export type CreateBookingData = Omit<Booking, 'id' | 'created_at' | 'modified_at' | 'status'>;
