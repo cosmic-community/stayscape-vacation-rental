@@ -14,7 +14,7 @@ export default function Hero() {
 
       {/* Content */}
       <div className="max-w-5xl mx-auto text-center relative z-10">
-        <h1 className="text-5xl md:text-6xl font-bold mb-6">
+        <h1 className="text-5xl md:text-6xl font-bold mb-6 text-white">
           Find your perfect getaway
         </h1>
         <p className="text-xl md:text-2xl mb-12 text-white/90">
