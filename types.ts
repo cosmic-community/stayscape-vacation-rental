@@ -83,6 +83,25 @@ export interface User extends CosmicObject {
   };
 }
 
+// Booking status type
+type BookingStatus = 'confirmed' | 'pending' | 'cancelled';
+
+// Booking interface
+export interface Booking extends CosmicObject {
+  type: 'bookings';
+  metadata: {
+    listing: Listing;
+    user: User;
+    check_in_date: string;
+    check_out_date: string;
+    guests: number;
+    total_nights: number;
+    total_price: number;
+    status: BookingStatus;
+    booking_date: string;
+  };
+}
+
 // API response types
 export interface CosmicResponse<T> {
   objects: T[];
@@ -102,6 +121,11 @@ export function isReview(obj: CosmicObject): obj is Review {
   return obj.type === 'reviews';
 }
 
+export function isBooking(obj: CosmicObject): obj is Booking {
+  return obj.type === 'bookings';
+}
+
 // Utility types
 export type CreateListingData = Omit<Listing, 'id' | 'created_at' | 'modified_at' | 'status'>;
 export type CreateReviewData = Omit<Review, 'id' | 'created_at' | 'modified_at' | 'status'>;
+export type CreateBookingData = Omit<Booking, 'id' | 'created_at' | 'modified_at' | 'status'>;
