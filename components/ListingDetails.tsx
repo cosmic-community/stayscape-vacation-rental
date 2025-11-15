@@ -19,7 +19,7 @@ export default function ListingDetails({ listing }: ListingDetailsProps) {
         </p>
       </div>
       
-      {photos.length > 0 && (
+      {photos.length > 0 && photos[0]?.imgix_url && (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-12 rounded-xl overflow-hidden">
           <div className="md:row-span-2">
             <img
