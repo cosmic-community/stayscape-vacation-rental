@@ -1,4 +1,5 @@
 import ContactForm from '@/components/ContactForm'
+import PageHero from '@/components/PageHero'
 
 export const metadata = {
   title: 'Contact Us - StayScape',
@@ -7,15 +8,14 @@ export const metadata = {
 
 export default function ContactPage() {
   return (
-    <div className="min-h-screen bg-gray-50 py-12">
-      <div className="max-w-3xl mx-auto px-4">
-        <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-gray-600 mb-4">Contact Us</h1>
-          <p className="text-lg text-gray-400">
-            Have a question? We'd love to hear from you. Send us a message and we'll respond as soon as possible.
-          </p>
-        </div>
-
+    <div className="min-h-screen bg-white">
+      <PageHero 
+        title="Contact Us"
+        description="Have a question? We'd love to hear from you. Send us a message and we'll respond as soon as possible."
+        backgroundImage="https://images.unsplash.com/photo-1423666639041-f56000c27a9a?w=2000&auto=format,compress"
+      />
+      
+      <div className="max-w-3xl mx-auto px-4 py-12">
         <div className="bg-white rounded-lg shadow-sm p-8">
           <ContactForm />
         </div>
