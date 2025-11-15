@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import type { Booking, BookingStatus } from '@/types'
+import type { Booking } from '@/types'
 
 interface TripsListProps {
   bookings: Booking[]
@@ -25,18 +25,24 @@ export default function TripsList({ bookings }: TripsListProps) {
     })
   }
 
-  const getStatusColor = (status: BookingStatus) => {
-    // Changed: Compare directly with typed BookingStatus values (no toLowerCase)
-    switch (status) {
-      case 'Confirmed':
+  const getStatusColor = (status: string) => {
+    // Changed: Handle status as string, normalize case for comparison
+    const normalizedStatus = status.toLowerCase()
+    switch (normalizedStatus) {
+      case 'confirmed':
         return 'bg-green-100 text-green-800'
-      case 'Pending':
+      case 'pending':
         return 'bg-yellow-100 text-yellow-800'
-      case 'Cancelled':
+      case 'cancelled':
         return 'bg-red-100 text-red-800'
       default:
         return 'bg-gray-100 text-gray-800'
     }
+  }
+
+  const getStatusDisplay = (status: string) => {
+    // Changed: Capitalize first letter for display
+    return status.charAt(0).toUpperCase() + status.slice(1).toLowerCase()
   }
 
   return (
@@ -44,6 +50,11 @@ export default function TripsList({ bookings }: TripsListProps) {
       {bookings.map((booking) => {
         const listing = booking.metadata.listing
         const photo = listing?.metadata?.photos?.[0]
+        
+        // Changed: Safely extract status as string
+        const status = typeof booking.metadata.status === 'string' 
+          ? booking.metadata.status 
+          : 'Pending'
         
         return (
           <div key={booking.id} className="border border-gray-200 rounded-lg overflow-hidden hover:shadow-md transition-shadow">
@@ -65,8 +76,8 @@ export default function TripsList({ bookings }: TripsListProps) {
                 >
                   {listing.metadata.title}
                 </Link>
-                <span className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(booking.metadata.status)}`}>
-                  {booking.metadata.status}
+                <span className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(status)}`}>
+                  {getStatusDisplay(status)}
                 </span>
               </div>
               

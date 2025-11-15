@@ -83,8 +83,8 @@ export interface User extends CosmicObject {
   };
 }
 
-// Booking status type
-export type BookingStatus = 'Confirmed' | 'Pending' | 'Cancelled';
+// Booking status type - Changed: Make it flexible to handle string values
+export type BookingStatus = string;
 
 // Booking interface
 export interface Booking extends CosmicObject {
