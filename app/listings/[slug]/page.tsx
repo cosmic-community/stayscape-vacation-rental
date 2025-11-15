@@ -1,56 +1,40 @@
 // app/listings/[slug]/page.tsx
-import { getListingBySlug, getReviewsForListing, getAllListings } from '@/lib/cosmic-helpers'
 import { notFound } from 'next/navigation'
+import { getListingBySlug, getReviewsForListing } from '@/lib/cosmic-helpers'
+import { getSessionUser } from '@/lib/session'
 import ListingDetails from '@/components/ListingDetails'
 import ReviewList from '@/components/ReviewList'
-import HostCard from '@/components/HostCard'
 import BookingCard from '@/components/BookingCard'
 
-interface PageProps {
-  params: Promise<{ slug: string }>
+interface ListingPageProps {
+  params: Promise<{
+    slug: string
+  }>
 }
 
-export async function generateStaticParams() {
-  try {
-    const listings = await getAllListings()
-    
-    return listings.map((listing) => ({
-      slug: listing.slug,
-    }))
-  } catch (error) {
-    console.error('Error generating static params:', error)
-    return []
-  }
-}
-
-export default async function ListingPage({ params }: PageProps) {
+export default async function ListingPage({ params }: ListingPageProps) {
   const { slug } = await params
   const listing = await getListingBySlug(slug)
   
   if (!listing) {
     notFound()
   }
-  
+
   const reviews = await getReviewsForListing(listing.id)
-  
+  const user = await getSessionUser()
+
   return (
-    <div className="min-h-screen bg-white">
-      <ListingDetails listing={listing} />
-      
-      <div className="max-w-7xl mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-          <div className="lg:col-span-2 space-y-12">
-            {listing.metadata.host && (
-              <HostCard host={listing.metadata.host} />
-            )}
-            
-            {reviews.length > 0 && (
+    <div className="min-h-screen bg-gray-50">
+      <div className="max-w-7xl mx-auto px-4 py-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <div className="lg:col-span-2">
+            <ListingDetails listing={listing} />
+            <div className="mt-8">
               <ReviewList reviews={reviews} />
-            )}
+            </div>
           </div>
-          
           <div className="lg:col-span-1">
-            <BookingCard listing={listing} />
+            <BookingCard listing={listing} userId={user?.id || null} />
           </div>
         </div>
       </div>

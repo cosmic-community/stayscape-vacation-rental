@@ -13,37 +13,32 @@ export async function POST(request: Request) {
       )
     }
 
-    const { 
-      listing_id, 
-      check_in_date, 
-      check_out_date, 
-      guests, 
-      total_nights, 
-      total_price 
-    } = await request.json()
+    const { listingId, checkInDate, checkOutDate, guests, totalNights, totalPrice } = await request.json()
 
-    // Validate input
-    if (!listing_id || !check_in_date || !check_out_date || !guests || !total_nights || !total_price) {
+    // Validate required fields
+    if (!listingId || !checkInDate || !checkOutDate || !guests || !totalNights || !totalPrice) {
       return NextResponse.json(
-        { error: 'Missing required booking information' },
+        { error: 'Missing required fields' },
         { status: 400 }
       )
     }
 
-    // Create booking in Cosmic
+    // Create booking date in YYYY-MM-DD format
     const bookingDate = new Date().toISOString().split('T')[0]
+
+    // Create the booking
     const response = await cosmic.objects.insertOne({
       title: `Booking for ${user.metadata.name}`,
       type: 'bookings',
       metadata: {
-        listing: listing_id,
+        listing: listingId,
         user: user.id,
-        check_in_date,
-        check_out_date,
+        check_in_date: checkInDate,
+        check_out_date: checkOutDate,
         guests: Number(guests),
-        total_nights: Number(total_nights),
-        total_price: Number(total_price),
-        status: 'Confirmed',
+        total_nights: Number(totalNights),
+        total_price: Number(totalPrice),
+        status: 'Pending',
         booking_date: bookingDate
       }
     })
@@ -53,7 +48,7 @@ export async function POST(request: Request) {
       booking: response.object
     })
   } catch (error) {
-    console.error('Booking creation error:', error)
+    console.error('Create booking error:', error)
     return NextResponse.json(
       { error: 'Failed to create booking' },
       { status: 500 }

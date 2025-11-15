@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import type { Booking } from '@/types'
+import type { Booking, BookingStatus } from '@/types'
 
 interface TripsListProps {
   bookings: Booking[]
@@ -25,8 +25,10 @@ export default function TripsList({ bookings }: TripsListProps) {
     })
   }
 
-  const getStatusColor = (status: string) => {
-    switch (status.toLowerCase()) {
+  const getStatusColor = (status: BookingStatus) => {
+    // Convert to lowercase for comparison, but status is already properly typed
+    const statusLower = status.toLowerCase()
+    switch (statusLower) {
       case 'confirmed':
         return 'bg-green-100 text-green-800'
       case 'pending':
