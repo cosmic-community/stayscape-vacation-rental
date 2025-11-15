@@ -64,29 +64,6 @@ export async function getReviewsForListing(listingId: string): Promise<Review[]>
   }
 }
 
-// Fetch all reviews across all listings
-export async function getAllReviews(): Promise<Review[]> {
-  try {
-    const response = await cosmic.objects
-      .find({ type: 'reviews' })
-      .props(['id', 'title', 'slug', 'metadata'])
-      .depth(1)
-    
-    // Sort reviews manually (SDK v1.5+)
-    const reviews = response.objects as Review[]
-    return reviews.sort((a, b) => {
-      const dateA = new Date(a.metadata.review_date || '').getTime()
-      const dateB = new Date(b.metadata.review_date || '').getTime()
-      return dateB - dateA // Newest first
-    })
-  } catch (error) {
-    if (hasStatus(error) && error.status === 404) {
-      return []
-    }
-    throw new Error('Failed to fetch reviews')
-  }
-}
-
 // Fetch all hosts
 export async function getAllHosts(): Promise<Host[]> {
   try {
