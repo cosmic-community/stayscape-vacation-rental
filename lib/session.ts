@@ -1,4 +1,5 @@
 import { cookies } from 'next/headers'
+import { cosmic } from './cosmic'
 import { getUserByEmail } from './auth'
 import type { User } from '@/types'
 
