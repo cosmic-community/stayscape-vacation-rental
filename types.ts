@@ -52,7 +52,7 @@ export interface Listing extends CosmicObject {
     bathrooms: number;
     amenities?: string[];
     photos?: Photo[];
-    host?: Host;
+    host?: Host | string; // Changed: Can be Host object or host ID string
     available?: boolean;
   };
 }
@@ -69,7 +69,7 @@ export interface Review extends CosmicObject {
   };
 }
 
-// User interface
+// User interface - Changed: Added host_profile reference
 export interface User extends CosmicObject {
   type: 'users';
   metadata: {
@@ -80,6 +80,7 @@ export interface User extends CosmicObject {
     bio?: string | null;
     phone?: string | null;
     created_at?: string;
+    host_profile?: Host | string | null; // Changed: Added host profile reference
   };
 }
 
@@ -129,3 +130,4 @@ export function isBooking(obj: CosmicObject): obj is Booking {
 export type CreateListingData = Omit<Listing, 'id' | 'created_at' | 'modified_at' | 'status'>;
 export type CreateReviewData = Omit<Review, 'id' | 'created_at' | 'modified_at' | 'status'>;
 export type CreateBookingData = Omit<Booking, 'id' | 'created_at' | 'modified_at' | 'status'>;
+export type CreateHostData = Omit<Host, 'id' | 'created_at' | 'modified_at' | 'status'>; // Changed: Added host creation type
