@@ -1,3 +1,4 @@
+// app/listings/[slug]/page.tsx
 import { getListingBySlug, getReviewsForListing, getAllListings } from '@/lib/cosmic-helpers'
 import { notFound } from 'next/navigation'
 import ListingDetails from '@/components/ListingDetails'
@@ -10,11 +11,16 @@ interface PageProps {
 }
 
 export async function generateStaticParams() {
-  const listings = await getAllListings()
-  
-  return listings.map((listing) => ({
-    slug: listing.slug,
-  }))
+  try {
+    const listings = await getAllListings()
+    
+    return listings.map((listing) => ({
+      slug: listing.slug,
+    }))
+  } catch (error) {
+    console.error('Error generating static params:', error)
+    return []
+  }
 }
 
 export default async function ListingPage({ params }: PageProps) {
