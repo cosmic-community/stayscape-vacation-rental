@@ -1,10 +1,12 @@
 import { getSessionUser } from '@/lib/session'
 import { redirect } from 'next/navigation'
-import { getBookingsForUser } from '@/lib/cosmic-helpers'
+import { getBookingsForUser, getUserWithHost } from '@/lib/cosmic-helpers'
 import ProfileForm from '@/components/ProfileForm'
 import LogoutButton from '@/components/LogoutButton'
 import TripsList from '@/components/TripsList'
 import PageHero from '@/components/PageHero'
+import BecomeHostButton from '@/components/BecomeHostButton'
+import Link from 'next/link'
 
 export default async function ProfilePage() {
   const user = await getSessionUser()
@@ -16,6 +18,10 @@ export default async function ProfilePage() {
 
   // Fetch user's bookings
   const bookings = await getBookingsForUser(user.id)
+  
+  // Changed: Get user with host profile
+  const userWithHost = await getUserWithHost(user.id)
+  const isHost = !!userWithHost?.metadata.host_profile
   
   return (
     <div className="min-h-screen bg-white">
@@ -53,11 +59,38 @@ export default async function ProfilePage() {
                   <div>
                     <h3 className="text-2xl font-semibold text-gray-600">{user.metadata.name}</h3>
                     <p className="text-gray-400">{user.metadata.email}</p>
+                    {isHost && (
+                      <span className="inline-block mt-2 px-3 py-1 bg-primary text-white text-xs font-medium rounded-full">
+                        Host
+                      </span>
+                    )}
                   </div>
                 </div>
               </div>
               
               <ProfileForm user={user} />
+              
+              {/* Changed: Host section */}
+              <div className="mt-8 pt-8 border-t border-gray-100">
+                <h3 className="text-xl font-bold text-gray-600 mb-4">Hosting</h3>
+                {isHost ? (
+                  <div>
+                    <p className="text-gray-400 mb-4">
+                      You're a StayScape host! Manage your listings and bookings from your dashboard.
+                    </p>
+                    <Link href="/host/dashboard" className="btn-primary inline-block">
+                      Go to Host Dashboard
+                    </Link>
+                  </div>
+                ) : (
+                  <div>
+                    <p className="text-gray-400 mb-4">
+                      Want to share your space? Become a host and start earning by welcoming travelers.
+                    </p>
+                    <BecomeHostButton />
+                  </div>
+                )}
+              </div>
             </div>
           </div>
 
