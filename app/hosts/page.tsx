@@ -1,31 +1,31 @@
 import { getAllHosts } from '@/lib/cosmic-helpers'
 import type { Host } from '@/types'
+import PageHero from '@/components/PageHero'
 
 export default async function HostsPage() {
   const hosts = await getAllHosts()
   
   return (
-    <div className="py-16 px-4 max-w-7xl mx-auto">
-      <div className="mb-12">
-        <h1 className="text-4xl font-bold text-gray-600 mb-4">
-          Meet Our Hosts
-        </h1>
-        <p className="text-lg text-gray-400">
-          Get to know the amazing people who make StayScape special
-        </p>
-      </div>
+    <div className="min-h-screen bg-white">
+      <PageHero 
+        title="Meet Our Hosts"
+        description="Get to know the amazing people who make StayScape special"
+        backgroundImage="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=2000&auto=format,compress"
+      />
       
-      {hosts.length === 0 ? (
-        <div className="text-center py-12">
-          <p className="text-gray-400 text-lg">No hosts found.</p>
-        </div>
-      ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {hosts.map((host) => (
-            <HostProfileCard key={host.id} host={host} />
-          ))}
-        </div>
-      )}
+      <div className="max-w-7xl mx-auto px-4 py-12">
+        {hosts.length === 0 ? (
+          <div className="text-center py-12">
+            <p className="text-gray-400 text-lg">No hosts found.</p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {hosts.map((host) => (
+              <HostProfileCard key={host.id} host={host} />
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   )
 }

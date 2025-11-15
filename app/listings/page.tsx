@@ -1,5 +1,6 @@
 import { getAllListings } from '@/lib/cosmic-helpers'
 import ListingGrid from '@/components/ListingGrid'
+import PageHero from '@/components/PageHero'
 
 export const metadata = {
   title: 'All Listings - StayScape',
@@ -12,14 +13,11 @@ export default async function ListingsPage() {
   return (
     <div className="min-h-screen bg-white">
       {/* Header Section */}
-      <div className="bg-gradient-to-r from-primary to-secondary text-white py-16">
-        <div className="max-w-7xl mx-auto px-4">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">All Listings</h1>
-          <p className="text-xl text-white/90">
-            Discover amazing vacation rentals for your next adventure
-          </p>
-        </div>
-      </div>
+      <PageHero 
+        title="All Listings"
+        description="Discover amazing vacation rentals for your next adventure"
+        backgroundImage="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=2000&auto=format,compress"
+      />
 
       {/* Listings Grid */}
       <div className="max-w-7xl mx-auto px-4 py-12">
