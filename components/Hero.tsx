@@ -11,12 +11,12 @@ export default function Hero() {
         }}
       />
       
-      {/* Gradient Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-r from-primary/90 to-primary-dark/90" />
+      {/* Black Opacity Overlay */}
+      <div className="absolute inset-0 bg-black/70" />
       
       {/* Content */}
       <div className="relative max-w-5xl mx-auto text-center">
-        <h1 className="text-5xl md:text-6xl font-bold mb-6">
+        <h1 className="text-5xl md:text-6xl font-bold mb-6 text-white">
           Find your perfect getaway
         </h1>
         <p className="text-xl md:text-2xl mb-12 text-white/90">

@@ -9,10 +9,10 @@ export default function PageHero({ title, description, backgroundImage }: PageHe
   const bgImage = backgroundImage || defaultBgImage
 
   return (
-    <div className="relative bg-gradient-to-r from-primary to-secondary text-white py-16 overflow-hidden">
+    <div className="relative text-white py-16 overflow-hidden">
       {/* Background Image */}
       <div 
-        className="absolute inset-0 opacity-20"
+        className="absolute inset-0"
         style={{
           backgroundImage: `url(${bgImage})`,
           backgroundSize: 'cover',
@@ -20,9 +20,12 @@ export default function PageHero({ title, description, backgroundImage }: PageHe
         }}
       />
       
+      {/* Black Opacity Overlay */}
+      <div className="absolute inset-0 bg-black/70" />
+      
       {/* Content */}
       <div className="relative max-w-7xl mx-auto px-4">
-        <h1 className="text-4xl md:text-5xl font-bold mb-4">{title}</h1>
+        <h1 className="text-4xl md:text-5xl font-bold mb-4 text-white">{title}</h1>
         <p className="text-xl text-white/90">
           {description}
         </p>
