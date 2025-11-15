@@ -19,6 +19,9 @@ export default function Header() {
             <Link href="/#listings" className="text-gray-400 hover:text-gray-600 transition-colors">
               Listings
             </Link>
+            <Link href="/hosts" className="text-gray-400 hover:text-gray-600 transition-colors">
+              Hosts
+            </Link>
           </nav>
           
           <div className="flex items-center space-x-4">
